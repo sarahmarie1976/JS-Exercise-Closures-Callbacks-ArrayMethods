@@ -48,8 +48,9 @@ function processFirstItem(stringList, callback) {
  * [2] Invoking `processLength` passing `[]` and `(num) => "There are " + num`,
  * should return "There are 0".
 */
-function processLength(/* CODE HERE */) {
+function processLength(list, callback) {
   /* CODE HERE */
+  return callback(list.length);
 }
 
 /**
@@ -66,8 +67,9 @@ function processLength(/* CODE HERE */) {
  * Invoking `processLastItem` passing `['foo', 'bar']` and `(str) => str + str`,
  * should return 'barbar'.
 */
-function processLastItem(/* CODE HERE */) {
+function processLastItem(stringList, callback) {
   /* CODE HERE */
+  return callback(stringList[stringList.length -1]);
 }
 
 /**
@@ -88,8 +90,9 @@ function processLastItem(/* CODE HERE */) {
  * [2] Invoking `processSum` passing `-5`, '-1', and `(num) => num + 1000`,
  * should return 994.
 */
-function processSum(/* CODE HERE */) {
+function processSum(num1, num2, callback) {
   /* CODE HERE */
+  return callback(num1 + num2);
 }
 
 /**
@@ -110,8 +113,9 @@ function processSum(/* CODE HERE */) {
  * [2] Invoking `processProduct` passing 25 and 0 and `(num) => num + 1000`,
  * should return 1000.
 */
-function processProduct(/* CODE HERE */) {
-  /* CODE HERE */
+function processProduct(num1, num2, callback) {
+	/* CODE HERE */
+	return callback(num1 * num2);
 }
 
 /**
@@ -132,8 +136,13 @@ function processProduct(/* CODE HERE */) {
  * [2] Invoking `processDuplicateFree` passing `[1,1,2,2,3]` and `(arr) => arr.length`,
  * should return 3.
 */
-function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */) {
+function processDuplicateFree(list, callback) {
   /* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */
+  return callback(
+		list.filter((item, index) => {
+			return item !== list[index - 1];
+		})
+	);
 }
 
 /////////////// HIGHER-ORDER ARRAY METHODS ///////////////
@@ -155,8 +164,13 @@ function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS
  * 
  * [2] Invoking `lowerCaseStrings` with `['a', 'b', 'c' ]` will return `[ 'a', 'b', 'c' ]`.
 */
-function lowerCaseStrings(/* code here */) {
+function lowerCaseStrings(strings) {
   /* code here */
+  const lowerCase = [];
+
+  strings.forEach((item) => { lowerCase.push(item.toLowerCase()); });
+
+  return lowerCase;
 }
 
 /**
@@ -174,8 +188,11 @@ function lowerCaseStrings(/* code here */) {
  * 
  * [2] Invoking `isItAnApple` with `['a', 'b', 'c' ]` will return `[ false, false, false ]`.
 */
-function isItAnApple(/* code here */) {
+function isItAnApple(strings) {
   /* code here */
+  return strings.map((item) => {
+		return item === 'apple' ? true : false;
+	});
 }
 
 /**
@@ -194,8 +211,9 @@ function isItAnApple(/* code here */) {
  * 
  * [2] Invoking `removeApple` with `['a', 'b', 'c' ]` will return `[ 'a', 'b', 'c' ]`.
 */
-function removeApple(/* code here */) {
+function removeApple(strings) {
   /* code here */
+  return strings.filter((item) => { return item !== 'apple'});
 }
 
 /**
@@ -213,8 +231,11 @@ function removeApple(/* code here */) {
  * 
  * [2] Invoking `stringSmash` with `['a', 'b', 'c' ]` will return `abc`.
 */
-function stringSmash(/* code here */) {
+function stringSmash(strings) {
   /* code here */
+  return strings.reduce((total, item) => {
+		return (total += item);
+	});
 }
 
 // A local community center is holding a fund raising 5k fun run and has invited
@@ -232,8 +253,15 @@ function stringSmash(/* code here */) {
  * @returns an array with all the runners' full names in the following format: "Smith, John".
  * The full names appear in the array in the same order the runners appear in the `runners` array.
 */
-function getFullNames(/* CODE HERE */) {
+function getFullNames(runners) {
   /* CODE HERE */
+  const fullNames = [];
+
+	runners.forEach((runner) => {
+		return fullNames.push(`${runner.last_name}, ${runner.first_name}`);
+	});
+
+	return fullNames;
 }
 
 /**
@@ -248,8 +276,10 @@ function getFullNames(/* CODE HERE */) {
  * @returns an array with all the runners' first names in ALL CAPS.
  * The first names appear in the array in the same order the runners appear in the `runners` array.
 */
-function firstNamesAllCaps(/* CODE HERE */) {
+function firstNamesAllCaps(runners) {
   /* CODE HERE */
+  return runners.map((item) => { return item.first_name.toUpperCase(); });
+ 
 }
 
 /**
@@ -266,11 +296,14 @@ function firstNamesAllCaps(/* CODE HERE */) {
  * @returns an array containing only the runners that use the given `tShirtSize`.
  * The runners in the array appear in the same order they appear in the `runners` array.
 */
-function getRunnersByTShirtSize(/* CODE HERE */) {
+function getRunnersByTShirtSize(runners, tShirtSize) {
   /* CODE HERE */
+  return runners.filter((runner) => {
+		return runner.shirtSize === tShirtSize;
+	});
 }
 
-/**
+/**_
  * ### Challenge `tallyUpDonations`
  *  * THIS IS A STRETCH PROBLEM! ATTEMPT ONLY AFTER COMPLETING ALL NON-STRETCH CHALLENGES!
  * 
@@ -281,8 +314,11 @@ function getRunnersByTShirtSize(/* CODE HERE */) {
  * @param runners array of runners like the one inside the /data/runners.js file.
  * @returns a number which is the sum of the donations by all runners.
 */
-function tallyUpDonations(/* CODE HERE */) {
+function tallyUpDonations(runners) {
   /* CODE HERE */
+  return runners.reduce((total, runner) => {
+		return (total += runner.donation);
+	}, 0);
 }
 
 /////////////// CLOSURES ///////////////
@@ -296,9 +332,16 @@ function tallyUpDonations(/* CODE HERE */) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ *      -counter1 is a closure function, you can see that it is a combination of a function bundled together (lexical environment)
+ *      -counter2 has a return count++ which means it in incrementing 
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
+ *    -counter1 code is a closure, you can see that there are two functions that can be passed in the function scope.
+ * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ *    
+ *    - counter1 code is good if you are wanting to stay in the function scope - it can be used to enable data privacy. 
  *
 */
 
